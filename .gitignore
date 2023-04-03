@@ -135,4 +135,4 @@ output
 output/
 *.json
 *.pkl
-*.py
+./*.py
