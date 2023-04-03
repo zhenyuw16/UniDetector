@@ -714,12 +714,12 @@ class BBoxHeadCLIPInference(BBoxHeadCLIP):
         cls_score, proposal_score = cls_score[0], cls_score[1]
         scores = cls_score.sigmoid()
         
-        gamma = 0.6
-        import pickle
-        frequencies = pickle.load(open('cnum5.pkl','rb')) + 10
-        frequencies = torch.as_tensor(frequencies, dtype=torch.float32).view(1, -1).to(cls_score.device)
-        gamma = 1 / frequencies ** gamma
-        scores[:,:-1] = scores[:,:-1] * gamma / gamma.mean()
+        # gamma = 0.6
+        # import pickle
+        # frequencies = pickle.load(open('cnum5.pkl','rb')) + 10
+        # frequencies = torch.as_tensor(frequencies, dtype=torch.float32).view(1, -1).to(cls_score.device)
+        # gamma = 1 / frequencies ** gamma
+        # scores[:,:-1] = scores[:,:-1] * gamma / gamma.mean()
 
         scores = scores ** self.beta * proposal_score[:, None] ** (1-self.beta)
 
