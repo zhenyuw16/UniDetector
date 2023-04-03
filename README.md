@@ -20,7 +20,7 @@ Prepare the language CLIP embeddings. We have released the pre-computed embeddin
 python scripts/dump_clip_features_manyprompt.py --ann path_to_annotation_for_datasets --clip_model RN50 --out_path path_to_lanugage_embeddings
 ~~~
 
-Prepare the pre-trained [RegionCLIP](https://github.com/microsoft/RegionCLIP) parameters. We have released the RegionCLIP embeddings converted in mmdetection formats [here]. The code for parameter conversion will be released soon.
+Prepare the pre-trained [RegionCLIP](https://github.com/microsoft/RegionCLIP) parameters. We have released the RegionCLIP embeddings converted in mmdetection formats [here](https://drive.google.com/file/d/1icKGFMQRHZpKhjl-YwN-389w2jx6siR2/view?usp=sharing). The code for parameter conversion will be released soon.
 
 
 ## Singe-dataset training
