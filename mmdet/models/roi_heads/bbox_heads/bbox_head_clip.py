@@ -720,8 +720,7 @@ class BBoxHeadCLIPInference(BBoxHeadCLIP):
         # frequencies = torch.as_tensor(frequencies, dtype=torch.float32).view(1, -1).to(cls_score.device)
         # gamma = 1 / frequencies ** gamma
         # scores[:,:-1] = scores[:,:-1] * gamma / gamma.mean()
-
-        scores = scores ** self.beta * proposal_score[:, None] ** (1-self.beta)
+        # scores = scores ** self.beta * proposal_score[:, None] ** (1-self.beta)
 
         # bbox_pred would be None in some detector when with_reg is False,
         # e.g. Grid R-CNN.
