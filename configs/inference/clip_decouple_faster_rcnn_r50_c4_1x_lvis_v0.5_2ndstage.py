@@ -144,7 +144,7 @@ data = dict(
         type=dataset_type,
         ann_file=data_root + 'annotations/lvis_v0.5_val.json',
         img_prefix=data_root + 'val2017/',
-        proposal_file='rp_val.pkl',
+        proposal_file='rp_val_ow.pkl',
         pipeline=test_pipeline))
 
 evaluation = dict(interval=1, metric='bbox')
