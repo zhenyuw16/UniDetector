@@ -64,7 +64,8 @@ class CustomDataset(Dataset):
                  proposal_file=None,
                  test_mode=False,
                  filter_empty_gt=True,
-                 class_agnostic=False):
+                 class_agnostic=False,
+                 dataset_id=None):
         self.ann_file = ann_file
         self.data_root = data_root
         self.img_prefix = img_prefix
@@ -75,6 +76,7 @@ class CustomDataset(Dataset):
         self.CLASSES = self.get_classes(classes)
         
         self.class_agnostic = class_agnostic
+        self.dataset_id = dataset_id
 
         # join paths if data_root is specified
         if self.data_root is not None:
@@ -218,7 +220,10 @@ class CustomDataset(Dataset):
         if self.proposals is not None:
             results['proposals'] = self.proposals[idx]
         self.pre_pipeline(results)
-        return self.pipeline(results)
+        results_pip = self.pipeline(results)
+        if self.dataset_id is not None:
+            results_pip['img_metas'].data['dataset_id'] = self.dataset_id
+        return results_pip
 
     def prepare_test_img(self, idx):
         """Get testing data  after pipeline.

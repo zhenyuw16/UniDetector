@@ -8,11 +8,12 @@ from .sabl_head import SABLHead
 from .scnet_bbox_head import SCNetBBoxHead
 
 from .bbox_head_clip import BBoxHeadCLIP
+from .bbox_head_clip_partitioned import BBoxHeadCLIPPartitioned
 from .convfc_bbox_score_head import Shared2FCBBoxScoreHead
 
 __all__ = [
     'BBoxHead', 'ConvFCBBoxHead', 'Shared2FCBBoxHead',
     'Shared4Conv1FCBBoxHead', 'DoubleConvFCBBoxHead', 'SABLHead', 'DIIHead',
     'SCNetBBoxHead',
-    'BBoxHeadCLIP', 'Shared2FCBBoxScoreHead'
+    'BBoxHeadCLIP', 'Shared2FCBBoxScoreHead', 'BBoxHeadCLIPPartitioned'
 ]

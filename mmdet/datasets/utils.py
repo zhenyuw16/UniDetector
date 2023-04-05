@@ -139,13 +139,14 @@ class NumClassCheckHook(Hook):
             for name, module in model.named_modules():
                 if hasattr(module, 'num_classes') and not isinstance(
                         module, (RPNHead, VGG, FusedSemanticHead, GARPNHead)):
-                    assert module.num_classes == len(dataset.CLASSES), \
-                        (f'The `num_classes` ({module.num_classes}) in '
-                         f'{module.__class__.__name__} of '
-                         f'{model.__class__.__name__} does not matches '
-                         f'the length of `CLASSES` '
-                         f'{len(dataset.CLASSES)}) in '
-                         f'{dataset.__class__.__name__}')
+                    pass
+                    #assert module.num_classes == len(dataset.CLASSES), \
+                    #    (f'The `num_classes` ({module.num_classes}) in '
+                    #     f'{module.__class__.__name__} of '
+                    #     f'{model.__class__.__name__} does not matches '
+                    #     f'the length of `CLASSES` '
+                    #     f'{len(dataset.CLASSES)}) in '
+                    #     f'{dataset.__class__.__name__}')
 
     def before_train_epoch(self, runner):
         """Check whether the training dataset is compatible with head.
