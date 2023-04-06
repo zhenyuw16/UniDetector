@@ -364,7 +364,7 @@ class BBoxHeadCLIPPartitioned(BaseModule):
         
         accuracy_all = []
         for k in range(len(img_metas)):
-            accuracy_all.append(accuracy(cls_scores[dataset_id][512*k:512*(k+1)], torch.where(labels[512*k:512*(k+1)]==max(C_s), C_s[k], labels[512*k:512*(k+1)]) ) )
+            accuracy_all.append(accuracy(cls_scores[dataset_id][512*k:512*(k+1)], torch.where(labels[512*k:512*(k+1)]==max(C_s), C, labels[512*k:512*(k+1)]) ) )
         losses['acc'] = sum(accuracy_all) / len(accuracy_all)
         if bbox_pred is not None:
             bg_class_ind = self.num_classes

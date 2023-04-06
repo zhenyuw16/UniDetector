@@ -44,9 +44,9 @@ model = dict(
                 target_stds=[0.1, 0.1, 0.2, 0.2]),
             with_cls=False,
             reg_class_agnostic=True,
-            zeroshot_path=['./clip_embeddings/coco_clip_a+cname_rn50_manyprompt.npy', './clip_embeddings/objects365_clip_a+cname_rn50_manyprompt.npy'],
-            cat_freq_path=[None, 'data/objects365/annotations/zhiyuan_objv2_train.1@3.5_cat_info.json'],
-            num_classes=365,
+            zeroshot_path=['./clip_embeddings/coco_clip_a+cname_rn50_manyprompt.npy', './clip_embeddings/objects365_clip_a+cname_rn50_manyprompt.npy', './clip_embeddings/oid_clip_a+cname_rn50_manyprompt.npy'],
+            cat_freq_path=[None, 'data/objects365/annotations/zhiyuan_objv2_train.1@3.5_cat_info.json', 'data/openimages/oid_challenge_2019_train_bbox.1@4.5_cat_info.json'],
+            num_classes=500,
             loss_cls=dict(type='CrossEntropyLoss', use_sigmoid=False, loss_weight=1.0),  ###### the loss_cls here is not appicable in training
             loss_bbox=dict(type='L1Loss', loss_weight=1.0))),
     # model training and testing settings
@@ -100,6 +100,7 @@ model = dict(
             nms=dict(type='soft_nms', iou_threshold=0.5, method='gaussian'),
             max_per_img=100)))
 
+
 classes_obj365 = ['Person', 'Sneakers', 'Chair', 'Other Shoes', 'Hat', 'Car', 'Lamp', 'Glasses', 'Bottle', 'Desk', 'Cup', 'Street Lights', 
 'Cabinet/shelf', 'Handbag/Satchel', 'Bracelet', 'Plate', 'Picture/Frame', 'Helmet', 'Book', 'Gloves', 'Storage box', 'Boat', 'Leather Shoes', 
 'Flower', 'Bench', 'Potted Plant', 'Bowl/Basin', 'Flag', 'Pillow', 'Boots', 'Vase', 'Microphone', 'Necklace', 'Ring', 'SUV', 'Wine Glass', 'Belt', 
@@ -126,6 +127,14 @@ classes_obj365 = ['Person', 'Sneakers', 'Chair', 'Other Shoes', 'Hat', 'Car', 'L
 'Antelope', 'Parrot', 'Seal', 'Buttefly', 'Dumbbell', 'Donkey', 'Lion', 'Urinal', 'Dolphin', 'Electric Drill', 'Hair Dryer', 'Egg tart', 'Jellyfish', 'Treadmill', 'Lighter', 'Grapefruit', 'Game board', 
 'Mop', 'Radish', 'Baozi', 'Target', 'French', 'Spring Rolls', 'Monkey', 'Rabbit', 'Pencil Case', 'Yak', 'Red Cabbage', 'Binoculars', 'Asparagus', 'Barbell', 'Scallop', 'Noddles', 'Comb', 'Dumpling', 
 'Oyster', 'Table Teniis paddle', 'Cosmetics Brush/Eyeliner Pencil', 'Chainsaw', 'Eraser', 'Lobster', 'Durian', 'Okra', 'Lipstick', 'Cosmetics Mirror', 'Curling', 'Table Tennis ']
+
+
+classes_oid = ('Infant bed', 'Rose', 'Flag', 'Flashlight', 'Sea turtle', 'Camera', 'Animal', 'Glove', 'Crocodile', 'Cattle', 'House', 'Guacamole', 'Penguin', 'Vehicle registration plate', 'Bench', 'Ladybug', 'Human nose', 'Watermelon', 'Flute', 'Butterfly', 'Washing machine', 'Raccoon', 'Segway', 'Taco', 'Jellyfish', 'Cake', 'Pen', 'Cannon', 'Bread', 'Tree', 'Shellfish', 'Bed', 'Hamster', 'Hat', 'Toaster', 'Sombrero', 'Tiara', 'Bowl', 'Dragonfly', 'Moths and butterflies', 'Antelope', 'Vegetable', 'Torch', 'Building', 'Power plugs and sockets', 'Blender', 'Billiard table', 'Cutting board', 'Bronze sculpture', 'Turtle', 'Broccoli', 'Tiger', 'Mirror', 'Bear', 'Zucchini', 'Dress', 'Volleyball', 'Guitar', 'Reptile', 'Golf cart', 'Tart', 'Fedora', 'Carnivore', 'Car', 'Lighthouse', 'Coffeemaker', 'Food processor', 'Truck', 'Bookcase', 'Surfboard', 'Footwear', 'Bench', 'Necklace', 'Flower', 'Radish', 'Marine mammal', 'Frying pan', 'Tap', 'Peach', 'Knife', 'Handbag', 'Laptop', 'Tent', 'Ambulance', 'Christmas tree', 'Eagle', 'Limousine', 'Kitchen & dining room table', 'Polar bear', 'Tower', 'Football', 'Willow', 'Human head', 'Stop sign', 'Banana', 'Mixer', 'Binoculars', 'Dessert', 'Bee', 'Chair', 'Wood-burning stove', 'Flowerpot', 'Beaker', 'Oyster', 'Woodpecker', 'Harp', 'Bathtub', 'Wall clock', 'Sports uniform', 'Rhinoceros', 'Beehive', 'Cupboard', 'Chicken', 'Man', 'Blue jay', 'Cucumber', 'Balloon', 'Kite', 'Fireplace', 'Lantern', 'Missile', 'Book', 'Spoon', 'Grapefruit', 'Squirrel', 'Orange', 'Coat', 'Punching bag', 'Zebra', 'Billboard', 'Bicycle', 'Door handle', 'Mechanical fan', 'Ring binder', 'Table', 'Parrot', 'Sock', 'Vase', 'Weapon', 'Shotgun', 'Glasses', 'Seahorse', 'Belt', 'Watercraft', 'Window', 'Giraffe', 'Lion', 'Tire', 'Vehicle', 'Canoe', 'Tie', 'Shelf', 'Picture frame', 'Printer', 'Human leg', 'Boat', 'Slow cooker', 'Croissant', 'Candle', 'Pancake', 'Pillow', 'Coin', 'Stretcher', 'Sandal', 'Woman', 'Stairs', 'Harpsichord', 'Stool', 'Bus', 'Suitcase', 'Human mouth', 'Juice', 'Skull', 'Door', 'Violin', 'Chopsticks', 'Digital clock', 'Sunflower', 'Leopard', 'Bell pepper', 'Harbor seal', 'Snake', 'Sewing machine', 'Goose', 'Helicopter', 'Seat belt', 'Coffee cup', 'Microwave oven', 'Hot dog', 'Countertop', 'Serving tray', 'Dog bed', 'Beer', 'Sunglasses', 'Golf ball', 'Waffle', 'Palm tree', 'Trumpet', 'Ruler', 'Helmet', 'Ladder', 'Office building', 'Tablet computer', 'Toilet paper', 'Pomegranate', 'Skirt', 'Gas stove', 'Cookie', 'Cart', 'Raven', 'Egg', 'Burrito', 'Goat', 'Kitchen knife', 'Skateboard', 'Salt and pepper shakers', 'Lynx', 'Boot', 'Platter', 'Ski', 'Swimwear', 'Swimming pool', 'Drinking straw', 'Wrench', 'Drum', 'Ant', 'Human ear', 'Headphones', 'Fountain', 'Bird', 'Jeans', 'Television', 'Crab', 'Microphone', 'Home appliance', \
+'Snowplow', 'Beetle', 'Artichoke', 'Jet ski', 'Stationary bicycle', 'Human hair', 'Brown bear', 'Starfish', 'Fork', 'Lobster', 'Corded phone', 'Drink', 'Saucer', 'Carrot', 'Insect', 'Clock', 'Castle', 'Tennis racket', 'Ceiling fan', 'Asparagus', 'Jaguar', 'Musical instrument', 'Train', 'Cat', 'Rifle', 'Dumbbell', 'Mobile phone', 'Taxi', 'Shower', 'Pitcher', 'Lemon', 'Invertebrate', 'Turkey', 'High heels', 'Bust', 'Elephant', 'Scarf', 'Barrel', 'Trombone', 'Pumpkin', 'Box', 'Tomato', 'Frog', 'Bidet', 'Human face', 'Houseplant', 'Van', 'Shark', 'Ice cream', 'Swim cap', 'Falcon', 'Ostrich', 'Handgun', 'Whiteboard', 'Lizard', 'Pasta', 'Snowmobile', 'Light bulb', 'Window blind', 'Muffin', 'Pretzel', 'Computer monitor', 'Horn', 'Furniture', 'Sandwich', 'Fox', 'Convenience store', 'Fish', 'Fruit', 'Earrings', 'Curtain', 'Grape', 'Sofa bed', 'Horse', 'Luggage and bags', 'Desk', 'Crutch', 'Bicycle helmet', 'Tick', 'Airplane', 'Canary', 'Spatula', 'Watch', 'Lily', 'Kitchen appliance', 'Filing cabinet', 'Aircraft', 'Cake stand', 'Candy', 'Sink', 'Mouse', 'Wine', 'Wheelchair', 'Goldfish', 'Refrigerator', 'French fries', 'Drawer', 'Treadmill', 'Picnic basket', 'Dice', 'Cabbage', 'Football helmet', 'Pig', 'Person', 'Shorts', 'Gondola', 'Honeycomb', 'Doughnut', 'Chest of drawers', 'Land vehicle', 'Bat', 'Monkey', 'Dagger', 'Tableware', 'Human foot', 'Mug', 'Alarm clock', 'Pressure cooker', 'Human hand', 'Tortoise', 'Baseball glove', 'Sword', 'Pear', 'Miniskirt', 'Traffic sign', 'Girl', 'Roller skates', 'Dinosaur', 'Porch', 'Human beard', 'Submarine sandwich', 'Screwdriver', 'Strawberry', 'Wine glass', 'Seafood', 'Racket', 'Wheel', 'Sea lion', 'Toy', 'Tea', 'Tennis ball', 'Waste container', 'Mule', 'Cricket ball', 'Pineapple', 'Coconut', 'Doll', 'Coffee table', 'Snowman', 'Lavender', 'Shrimp', 'Maple', 'Cowboy hat', 'Goggles', 'Rugby ball', 'Caterpillar', 'Poster', 'Rocket', 'Organ', 'Saxophone', 'Traffic light', 'Cocktail', 'Plastic bag', 'Squash', 'Mushroom', 'Hamburger', 'Light switch', 'Parachute', 'Teddy bear', 'Winter melon', 'Deer', 'Musical keyboard', 'Plumbing fixture', 'Scoreboard', 'Baseball bat', 'Envelope', 'Adhesive tape', 'Briefcase', 'Paddle', 'Bow and arrow', 'Telephone', 'Sheep', 'Jacket', 'Boy', 'Pizza', 'Otter', 'Office supplies', 'Couch', 'Cello', 'Bull', 'Camel', 'Ball', 'Duck', 'Whale', 'Shirt', 'Tank', 'Motorcycle', 'Accordion', 'Owl', 'Porcupine', 'Sun hat', 'Nail', 'Scissors', 'Swan', 'Lamp', 'Crown', 'Piano', 'Sculpture', 'Cheetah', 'Oboe', 'Tin can', 'Mango', 'Tripod', 'Oven', 'Mouse', 'Barge', 'Coffee', 'Snowboard', 'Common fig', 'Salad', 'Marine invertebrates', 'Umbrella', 'Kangaroo', 'Human arm', 'Measuring cup', 'Snail', 'Loveseat', 'Suit', 'Teapot', 'Bottle', 'Alpaca', 'Kettle', 'Trousers', 'Popcorn', 'Centipede', 'Spider', \
+'Sparrow', 'Plate', 'Bagel', 'Personal care', 'Apple', 'Brassiere', 'Bathroom cabinet', 'studio couch', 'Computer keyboard', 'Table tennis racket', 'Sushi', 'Cabinetry', 'Street light', 'Towel', 'Nightstand', 'Rabbit', 'Dolphin', 'Dog', 'Jug', 'Wok', 'Fire hydrant', 'Human eye', 'Skyscraper', 'Backpack', 'Potato', 'Paper towel', 'Lifejacket', 'Bicycle wheel', 'Toilet')
+
+
+
 
 # dataset settings
 dataset_type = 'CocoDataset'
@@ -177,7 +186,14 @@ data = dict(
                 img_prefix='data/objects365/train/',
                 classes=classes_obj365,
                 pipeline=train_pipeline,
-                dataset_id=1)
+                dataset_id=1),
+            dict(
+                type=dataset_type,
+                ann_file='data/openimages/oid_challenge_2019_train_bbox.1@4.5.json',
+                img_prefix='data/openimages/',
+                classes=classes_oid,
+                pipeline=train_pipeline,
+                dataset_id=2)
             ]),
     val=dict(
         type=dataset_type,
