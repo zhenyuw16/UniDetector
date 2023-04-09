@@ -20,12 +20,12 @@ Prepare the language CLIP embeddings. We have released the pre-computed embeddin
 python scripts/dump_clip_features_manyprompt.py --ann path_to_annotation_for_datasets --clip_model RN50 --out_path path_to_lanugage_embeddings
 ~~~
 
-Prepare the pre-trained [RegionCLIP](https://github.com/microsoft/RegionCLIP) parameters. We have released the RegionCLIP embeddings converted in mmdetection formats [here](https://drive.google.com/file/d/1icKGFMQRHZpKhjl-YwN-389w2jx6siR2/view?usp=sharing). The code for parameter conversion will be released soon.
+Prepare the pre-trained [RegionCLIP](https://github.com/microsoft/RegionCLIP) parameters. We have released the RegionCLIP embeddings converted in mmdetection formats [here]. The code for parameter conversion will be released soon.
 
 
 ## Singe-dataset training
 
-- End-to-end training
+### End-to-end training
 
 run
 ~~~
@@ -33,7 +33,7 @@ bash tools/dist_train.sh configs/singledataset/clip_end2end_faster_rcnn_r50_c4_1
 ~~~
 to train a Faster RCNN model on the single COCO dataset (val35k).
 
-- Decoupled training
+### Decoupled training
 
 train the region proposal stage (our CLN model) on the single COCO dataset (val35k):
 ~~~
@@ -53,14 +53,14 @@ bash tools/dist_train.sh configs/singledataset/clip_decouple_faster_rcnn_r50_c4_
 
 ## Open-world inference
 
-- End-to-end inference
+### End-to-end inference
 
 inference on the LVIS v0.5 dataset to evaluation the open-world performance of end-to-end models:
 ~~~
 bash tools/dist_test.sh configs/inference/clip_end2end_faster_rcnn_r50_c4_1x_lvis_v0.5.py [path_for_trained_checkpoints] 8 --eval bbox
 ~~~
 
-- Decoupled inference
+### Decoupled inference
 
 extract pre-computed region proposals:
 ~~~
@@ -72,8 +72,10 @@ inference with pre-computed proposals and the RoI classification stage:
 bash tools/dist_test.sh configs/inference/clip_decouple_faster_rcnn_r50_c4_1x_lvis_v0.5_2ndstage.py [path_for_trained_checkpoints] 8 --eval bbox
 ~~~
 
+### Inference with probability calibration
+
 The code for probability calibration will be released soon.
 
 ## Multi-dataset training
 
-The code for multi-dataset training will be released soon.
+The steps for multi-dataset training are generally the same as single-dataset training. Use the config files under `configs/multidataset/` for multi-dataset training. We release the config files for training with two datasets (Objects365 and COCO) and three datasets (OpenImages, Objects365 and COCO). 
