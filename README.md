@@ -20,7 +20,7 @@ Prepare the language CLIP embeddings. We have released the pre-computed embeddin
 python scripts/dump_clip_features_manyprompt.py --ann path_to_annotation_for_datasets --clip_model RN50 --out_path path_to_lanugage_embeddings
 ~~~
 
-Prepare the pre-trained [RegionCLIP](https://github.com/microsoft/RegionCLIP) parameters. We have released the RegionCLIP embeddings converted in mmdetection formats [here]. The code for parameter conversion will be released soon.
+Prepare the pre-trained [RegionCLIP](https://github.com/microsoft/RegionCLIP) parameters. We have released the RegionCLIP embeddings converted in mmdetection formats [here](https://drive.google.com/file/d/1icKGFMQRHZpKhjl-YwN-389w2jx6siR2/view?usp=sharing). The code for parameter conversion will be released soon.
 
 
 ## Singe-dataset training
@@ -74,7 +74,18 @@ bash tools/dist_test.sh configs/inference/clip_decouple_faster_rcnn_r50_c4_1x_lv
 
 ### Inference with probability calibration
 
-The code for probability calibration will be released soon.
+For inference with probability calibration, obtain detection results for prior probability by infering first:
+~~~
+bash tools/dist_test.sh configs/inference/clip_decouple_faster_rcnn_r50_c4_1x_lvis_v0.5_2ndstage.py [path_for_trained_checkpoints] 8 --out raw_lvis_results.pkl --eval bbox
+~~~
+
+`raw_lvis_results.pkl` here is the detection result file we use here by default.
+
+Then inference with probability calibration:
+~~~
+bash tools/dist_test.sh configs/inference/clip_decouple_faster_rcnn_r50_c4_1x_lvis_v0.5_2ndstage_withcalibration.py [path_for_trained_checkpoints] 8 --eval bbox
+~~~
+
 
 ## Multi-dataset training
 
