@@ -10,6 +10,7 @@ from mmdet.models.builder import HEADS, build_loss
 from mmdet.models.losses import accuracy
 from mmdet.models.utils import build_linear_layer
 import json
+import mmcv
 
 class AttentionPool2d(nn.Module):
     def __init__(self, spacial_dim: int, embed_dim: int, num_heads: int, output_dim: int = None):
@@ -672,9 +673,25 @@ class BBoxHeadCLIPInference(BBoxHeadCLIP):
 
     def __init__(self,
                  beta,
+                 withcalibration=False,
+                 resultfile=None,
+                 gamma=None,
                  **kwargs):
         super(BBoxHeadCLIPInference, self).__init__(**kwargs)
         self.beta = beta
+        if withcalibration:
+            assert resultfile is not None
+            assert gamma is not None
+            preresult = mmcv.load(resultfile)
+            cnum = np.zeros((len(preresult[0])))
+            for i in range(len(preresult)):
+                for nc in range(len(preresult[i])):
+                    cnum[nc] += preresult[i][nc].shape[0]
+            self.cnum = cnum
+            self.gamma = gamma
+        
+        self.withcalibration = withcalibration
+            
 
     @force_fp32(apply_to=('cls_score', 'bbox_pred'))
     def get_bboxes(self,
@@ -714,13 +731,12 @@ class BBoxHeadCLIPInference(BBoxHeadCLIP):
         cls_score, proposal_score = cls_score[0], cls_score[1]
         scores = cls_score.sigmoid()
         
-        # gamma = 0.6
-        # import pickle
-        # frequencies = pickle.load(open('cnum5.pkl','rb')) + 10
-        # frequencies = torch.as_tensor(frequencies, dtype=torch.float32).view(1, -1).to(cls_score.device)
-        # gamma = 1 / frequencies ** gamma
-        # scores[:,:-1] = scores[:,:-1] * gamma / gamma.mean()
-        # scores = scores ** self.beta * proposal_score[:, None] ** (1-self.beta)
+        if self.withcalibration:
+            frequencies = torch.as_tensor(self.cnum, dtype=torch.float32).view(1, -1).to(cls_score.device)
+            frequencies = 1 / frequencies ** self.gamma
+            scores[:,:-1] = scores[:,:-1] * frequencies / frequencies.mean()
+        
+        scores = scores ** self.beta * proposal_score[:, None] ** (1-self.beta)
 
         # bbox_pred would be None in some detector when with_reg is False,
         # e.g. Grid R-CNN.
