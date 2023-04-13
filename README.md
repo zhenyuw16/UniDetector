@@ -90,3 +90,13 @@ bash tools/dist_test.sh configs/inference/clip_decouple_faster_rcnn_r50_c4_1x_lv
 ## Multi-dataset training
 
 The steps for multi-dataset training are generally the same as single-dataset training. Use the config files under `configs/multidataset/` for multi-dataset training. We release the config files for training with two datasets (Objects365 and COCO) and three datasets (OpenImages, Objects365 and COCO). 
+
+## MODEL ZOO
+
+We will release other checkpoints soon.
+
+|Training Data                  |  end-to-end training | decoupled training (1st stage)  | decoupled training (2nd stage)  |
+|-------------------------------|----------------------|-----------------|----------|
+|COCO                           | [model](https://drive.google.com/file/d/1zKjKO_jSMQmIu5qNuQwyKohKDdCJ7tnG/view?usp=sharing)              |  [model](https://drive.google.com/file/d/1zAvoPx5btVug64Zz_9-VNtp6OzyYLt_d/view?usp=sharing) |   [model](https://drive.google.com/file/d/1I__-S-FzvLM2ToxenSzESe4MAy3mATK7/view?usp=sharing)     |
+|COCO + Objects365              |                |          |          |
+|COCO + Objects365 + OpenImages |                 |         |          |
